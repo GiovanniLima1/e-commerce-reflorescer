@@ -1,43 +1,46 @@
 package com.generation.reflorescer.model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tb_categoria")
+
 public class Categoria {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long Id;
+	
+	@NotBlank(message = "Atributo é obrigatório")
+	private String nomeCategoria;
+	
+	private String descricaoCategoria;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	public Long getId() {
+		return Id;
+	}
 
-    @NotNull(message = "O atributo nome é obrigatório")
-    private String nomeCategoria;
+	public String getNomeCategoria() {
+		return nomeCategoria;
+	}
 
-    private String descricaoCategoria;
+	public String getDescricaoCategoria() {
+		return descricaoCategoria;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setId(Long id) {
+		Id = id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setNomeCategoria(String nomeCategoria) {
+		this.nomeCategoria = nomeCategoria;
+	}
 
-    public String getNomeCategoria() {
-        return nomeCategoria;
-    }
-
-    public void setNomeCategoria(String nomeCategoria) {
-        this.nomeCategoria = nomeCategoria;
-    }
-
-    public String getDescricaoCategoria() {
-        return descricaoCategoria;
-    }
-
-    public void setDescricaoCategoria(String descricaoCategoria) {
-        this.descricaoCategoria = descricaoCategoria;
-    }
+	public void setDescricaoCategoria(String descricaoCategoria) {
+		this.descricaoCategoria = descricaoCategoria;
+	}
 }
-
