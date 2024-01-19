@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 
@@ -19,7 +20,7 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
+	 
 	@NotBlank(message = "O atributo nome é obrigatório")
 	@Size(min = 1, max = 50, message = "O nome do produto deve ter no mínimo 1 caractere e no máximo 50")
 	private String nome;
@@ -27,18 +28,33 @@ public class Produto {
 	@Size(min = 1, max = 1000, message = "A descrição do produto deve ter no mínimo 1 caractere e no máximo 1000")
 	private String descricao;
 	
-	@NotBlank(message = "O atributo preço é obrigatório")
+	@NotNull(message = "O atributo preço é obrigatório")
 	private Double preco;
 	
-	@NotBlank(message = "O atributo quantidade é obrigatório")
+	@NotNull(message = "O atributo quantidade é obrigatório")
 	private Long quantidade;
 	
 	private String foto; 
 	
 	  
 	@ManyToOne
-	@JsonIgnoreProperties("produtos")
+	@JsonIgnoreProperties("produto")
 	private Categoria categoria;
+
+	@ManyToOne
+	@JsonIgnoreProperties("produto")
+	private Usuario usuario;
+	
+	
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 
 	public Long getId() {
