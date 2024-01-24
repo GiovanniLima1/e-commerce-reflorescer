@@ -30,7 +30,7 @@ public class UsuarioService {
 
 	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
 
-		if (usuarioRepository.findByUsuario(usuario.getNomeUsuario()).isPresent())
+		if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
 			return Optional.empty();
 
 		usuario.setSenha(criptografarSenha(usuario.getSenha()));
@@ -43,7 +43,7 @@ public class UsuarioService {
 		
 		if(usuarioRepository.findById(usuario.getId()).isPresent()) {
 
-			Optional<Usuario> buscaUsuario = usuarioRepository.findByUsuario(usuario.getNomeUsuario());
+			Optional<Usuario> buscaUsuario = usuarioRepository.findByUsuario(usuario.getUsuario());
 
 			if ( (buscaUsuario.isPresent()) && ( buscaUsuario.get().getId() != usuario.getId()))
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
@@ -60,20 +60,20 @@ public class UsuarioService {
 
 	public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin) {
         
-		var credenciais = new UsernamePasswordAuthenticationToken(usuarioLogin.get().getNomeUsuario(), usuarioLogin.get().getSenha());
+		var credenciais = new UsernamePasswordAuthenticationToken(usuarioLogin.get().getUsuario(), usuarioLogin.get().getSenha());
 		
 		Authentication authentication = authenticationManager.authenticate(credenciais);
         
 		if (authentication.isAuthenticated()) {
 
-			Optional<Usuario> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getNomeUsuario());
+			Optional<Usuario> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
 
 			if (usuario.isPresent()) {
 
-			   usuarioLogin.get().setId(usuario.get().getId());
+			    usuarioLogin.get().setId(usuario.get().getId());
                 usuarioLogin.get().setNomeUsuario(usuario.get().getNomeUsuario());
                 usuarioLogin.get().setFoto(usuario.get().getFoto());
-                usuarioLogin.get().setToken(gerarToken(usuarioLogin.get().getNomeUsuario()));
+                usuarioLogin.get().setToken(gerarToken(usuarioLogin.get().getUsuario()));
                 usuarioLogin.get().setSenha("");				
 
 			   return usuarioLogin;
