@@ -29,7 +29,7 @@ public class Usuario {
 	
 	@NotBlank(message = "O email é obrigatório!")
 	@Email(message = "O email deve ser válido!")
-	private String email;
+	private String usuario;
 	
 	@NotBlank(message = "A senha é obrigatória!")
 	@Size(min = 8, message = "A senha deve conter no mínimo 8 caracteres!")
@@ -68,12 +68,12 @@ public class Usuario {
 		this.nomeUsuario = nomeUsuario;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getSenha() {
